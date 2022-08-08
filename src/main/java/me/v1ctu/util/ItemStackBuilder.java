@@ -1,8 +1,10 @@
 package me.v1ctu.util;
 
 import com.google.common.collect.Lists;
+import de.tr7zw.changeme.nbtapi.NBTCompound;
+import de.tr7zw.changeme.nbtapi.NBTItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -11,10 +13,11 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class ItemStackBuilder {
 
-    private final ItemStack itemStack;
+    private ItemStack itemStack;
 
     private final ItemMeta itemMeta;
 
@@ -69,6 +72,34 @@ public class ItemStackBuilder {
         return this;
     }
 
+    public ItemStackBuilder owner(String owner) {
+        NBTItem nbtItem = new NBTItem(itemStack);
+        NBTCompound skullCompound = nbtItem.addCompound("SkullOwner");
+        skullCompound.setString("Name", owner);
+
+        itemStack = nbtItem.getItem();
+
+        return this;
+    }
+
+    public ItemStackBuilder owner(UUID owner) {
+        SkullMeta skullMeta = (SkullMeta) itemMeta;
+        skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(owner));
+
+        itemStack.setItemMeta(skullMeta);
+
+        return this;
+    }
+
+    public ItemStackBuilder nbtValue(String key, Object value) {
+        NBTItem nbtItem = new NBTItem(itemStack);
+        nbtItem.setObject(key, value);
+
+        itemStack = nbtItem.getItem();
+
+        return this;
+    }
+
     public ItemStackBuilder flag(ItemFlag... itemFlags) {
         itemMeta.addItemFlags(itemFlags);
         itemStack.setItemMeta(itemMeta);
@@ -84,14 +115,6 @@ public class ItemStackBuilder {
 
     public ItemStackBuilder amount(int amount) {
         itemStack.setAmount(amount);
-
-        return this;
-    }
-
-    public ItemStackBuilder head(OfflinePlayer player) {
-        SkullMeta skullMeta = (SkullMeta) itemMeta;
-        skullMeta.setOwningPlayer(player);
-        itemStack.setItemMeta(skullMeta);
 
         return this;
     }

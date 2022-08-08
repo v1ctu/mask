@@ -1,0 +1,8 @@
+masks:
+  hype_mask:
+    display_name: "&3[Hype Mask]"
+    price: 2500.0
+    effects:
+      - SPEED
+      - INCREASE_DAMAGE
+    skin: "http://textures.minecraft.net/texture/955d611a878e821231749b2965708cad942650672db09e26847a88e2fac2946"

@@ -100,6 +100,15 @@ public class ItemStackBuilder {
         return this;
     }
 
+    public ItemStackBuilder nbtValueString(String key, String value) {
+        NBTItem nbtItem = new NBTItem(itemStack);
+        nbtItem.setString(key, value);
+
+        itemStack = nbtItem.getItem();
+
+        return this;
+    }
+
     public ItemStackBuilder flag(ItemFlag... itemFlags) {
         itemMeta.addItemFlags(itemFlags);
         itemStack.setItemMeta(itemMeta);

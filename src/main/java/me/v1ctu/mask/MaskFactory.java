@@ -15,7 +15,7 @@ public class MaskFactory {
         itemStackBuilder.addLore(
                 "§7Price: §a" + mask.getPrice(), "§7Effects: §a" + PotionEffectAdapter.joinEffects(mask.getEffects()));
 
-        itemStackBuilder.nbtValue("mask", mask.getName());
+        itemStackBuilder.nbtValueString("mask", mask.getName());
 
         return itemStackBuilder.build();
     }

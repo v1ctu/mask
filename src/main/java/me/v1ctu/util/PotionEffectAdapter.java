@@ -4,6 +4,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PotionEffectAdapter {
 
@@ -19,17 +20,9 @@ public class PotionEffectAdapter {
         return effectTypes;
     }
 
-    public static String serializeData(List<PotionEffectType> data) {
-        final StringBuilder stringBuilder = new StringBuilder();
-
-        int size = 0;
-        for (PotionEffectType effectType : data) {
-            stringBuilder.append(effectType.getName());
-            if (size != data.size()) {
-                stringBuilder.append(";");
-            }
-        }
-
-        return stringBuilder.toString();
+    public static String joinEffects(List<PotionEffectType> effects) {
+        return effects.stream()
+            .map(effect -> String.format("§a%s", effect.getName()))
+            .collect(Collectors.joining(", "));
     }
 }
